@@ -65,3 +65,7 @@ services:
             - '@locastic_sylius_comparer_plugin.factory.comparer_product.inner'
             - '@locastic_sylius_comparer_plugin.repository.comparer'
             - '@sylius.repository.product'
+
+parameters:
+    comparer_item_limit: 4
+    comparer_cookie_token: 'locastic_sylius_comparer'
