@@ -45,6 +45,11 @@ services:
         arguments:
             - '%locastic_sylius_comparer_plugin.model.comparer.class%'
 
+    locastic_sylius_comparer_plugin.factory.comparer_product:
+        class: Sylius\Component\Resource\Factory\Factory
+        arguments:
+            - '%locastic_sylius_comparer_plugin.model.comparer_product.class%'
+
     locastic_sylius_comparer_plugin.custom_factory.comparer:
         class: Locastic\SyliusComparerPlugin\Factory\ComparerFactory
         decorates: locastic_sylius_comparer_plugin.factory.comparer
@@ -52,3 +57,11 @@ services:
             - '@locastic_sylius_comparer_plugin.factory.comparer.inner'
             - '@sylius.factory.customer'
             - '@sylius.factory.product'
+    
+    locastic_sylius_comparer_plugin.custom_factory.comparer_product:
+        class: Locastic\SyliusComparerPlugin\Factory\ComparerProductFactory
+        decorates: locastic_sylius_comparer_plugin.factory.comparer_product
+        arguments:
+            - '@locastic_sylius_comparer_plugin.factory.comparer_product.inner'
+            - '@locastic_sylius_comparer_plugin.repository.comparer'
+            - '@sylius.repository.product'

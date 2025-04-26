@@ -5,3 +5,4 @@ imports:
 
 parameters:
     locastic_sylius_comparer_plugin.model.comparer.class: Locastic\SyliusComparerPlugin\Entity\Comparer
+    locastic_sylius_comparer_plugin.model.comparer_product.class: Locastic\SyliusComparerPlugin\Entity\ComparerProduct
