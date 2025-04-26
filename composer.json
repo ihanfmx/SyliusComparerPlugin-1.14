@@ -10,9 +10,10 @@
         }
     ],
     "require": {
-        "php": "^7.1",
 
-        "sylius/sylius": "1.2.*",
+        "php": "^7.1 || ^8.0 || ^8.1 || ^8.2 || ^8.3",
+        "sylius/sylius": "~1.2.0 || ~1.14.0",
+        
         "sensio/generator-bundle": "^3.1"
     },
     "require-dev": {
