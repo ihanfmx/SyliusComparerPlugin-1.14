@@ -2,3 +2,6 @@ imports:
     - { resource: "@LocasticSyliusComparerPlugin/Resources/config/parameters.yml" }
     - { resource: "@LocasticSyliusComparerPlugin/Resources/config/services.yml" }
     - { resource: "@LocasticSyliusComparerPlugin/Resources/config/resources.yml" }
+
+parameters:
+    locastic_sylius_comparer_plugin.model.comparer.class: Locastic\SyliusComparerPlugin\Entity\Comparer

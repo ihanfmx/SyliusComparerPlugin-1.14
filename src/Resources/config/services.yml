@@ -39,3 +39,16 @@ services:
             - "@session.flash_bag"
             - "@router.default"
             - "@sylius.theme.translation.translator"
+
+    locastic_sylius_comparer_plugin.factory.comparer:
+        class: Sylius\Component\Resource\Factory\Factory
+        arguments:
+            - '%locastic_sylius_comparer_plugin.model.comparer.class%'
+
+    locastic_sylius_comparer_plugin.custom_factory.comparer:
+        class: Locastic\SyliusComparerPlugin\Factory\ComparerFactory
+        decorates: locastic_sylius_comparer_plugin.factory.comparer
+        arguments:
+            - '@locastic_sylius_comparer_plugin.factory.comparer.inner'
+            - '@sylius.factory.customer'
+            - '@sylius.factory.product'
