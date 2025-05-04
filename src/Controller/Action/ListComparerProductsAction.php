@@ -10,11 +10,12 @@ use Locastic\SyliusComparerPlugin\Entity\ComparerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Templating\EngineInterface;
+#use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment as TemplatingEngine;
 
 final class ListComparerProductsAction
 {
-    /** @var EngineInterface */
+    /** @var TemplateEngine */
     private $templatingEngine;
 
     /** @var EntityManagerInterface */
@@ -27,7 +28,7 @@ final class ListComparerProductsAction
     private $comparerCookieToken;
 
     public function __construct(
-        EngineInterface $templatingEngine,
+        TemplatingEngine $templatingEngine,
         EntityManagerInterface $comparerManager,
         ComparerContextInterface $comparerContext,
         string $comparerCookieToken

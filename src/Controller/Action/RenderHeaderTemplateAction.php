@@ -8,12 +8,13 @@ use Locastic\SyliusComparerPlugin\Context\ComparerContextInterface;
 use Locastic\SyliusComparerPlugin\Entity\ComparerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Templating\EngineInterface;
+#use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment as TemplatingEngine;
 
 final class RenderHeaderTemplateAction
 {
     /**
-     * @var EngineInterface
+     * @var TemplatingEngine
      */
     private $templatingEngine;
     /**
@@ -21,7 +22,7 @@ final class RenderHeaderTemplateAction
      */
     private $comparerContext;
 
-    public function __construct(EngineInterface $templatingEngine, ComparerContextInterface $comparerContext)
+    public function __construct(TemplatingEngine $templatingEngine, ComparerContextInterface $comparerContext)
     {
         $this->templatingEngine = $templatingEngine;
         $this->comparerContext = $comparerContext;

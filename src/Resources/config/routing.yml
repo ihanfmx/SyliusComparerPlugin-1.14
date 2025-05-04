@@ -16,4 +16,24 @@ locastic_sylius_comparer_list_products:
 locastic_sylius_comparer_number_of_products:
     path: /comparer/number-of-products
     defaults:
-        _controller: locastic.sylius_comparer_plugin.controller.action.render_header_template_action
+        _controller: locastic_sylius_comparer_plugin.controller.action.render_header_template_action
+
+# locastic_sylius_comparer_add_product:
+#     path: /comparer/add/{productId}
+#     controller: Locastic\SyliusComparerPlugin\Controller\Action\AddProductToComparerAction::__invoke
+#     methods: [POST]
+
+# locastic_sylius_comparer_remove_product:
+#     path: /comparer/remove/{productId}
+#     controller: Locastic\SyliusComparerPlugin\Controller\Action\RemoveProductFromComparerAction::__invoke
+#     methods: [POST]
+
+# locastic_sylius_comparer_list_products:
+#     path: /comparer
+#     controller: Locastic\SyliusComparerPlugin\Controller\Action\ListComparerProductsAction::__invoke
+#     methods: [GET]
+
+# locastic_sylius_comparer_number_of_products:
+#     path: /comparer/number-of-products
+#     controller: Locastic\SyliusComparerPlugin\Controller\Action\RenderHeaderTemplateAction::__invoke
+#     methods: [GET]

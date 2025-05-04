@@ -25,8 +25,8 @@
                         <div class="sylius-product-price">{{ money.calculatePrice(product|sylius_resolve_variant) }}</div>
                     {% endif %}
                 </div></div>
-            {% include 'LocasticSyliusComparerPlugin::_removeFromComparer.html.twig' %}
-            {% include 'LocasticSyliusComparerPlugin::_comparerInventory.html.twig' %}
+            {% include '@LocasticSyliusComparerPlugin/_removeFromComparer.html.twig' %}
+            {% include '@LocasticSyliusComparerPlugin/_comparerInventory.html.twig' %}
         </div>
     {% endfor %}
 </div>

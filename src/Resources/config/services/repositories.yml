@@ -1,0 +1,12 @@
+services:
+    locastic_sylius_comparer_plugin.repository.comparer:
+        class: Locastic\SyliusComparerPlugin\Repository\ComparerRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - "%locastic_sylius_comparer_plugin.model.comparer.class%"
+
+    locastic_sylius_comparer_plugin.repository.comparer_product:
+        class: Locastic\SyliusComparerPlugin\Repository\ComparerProductRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - "%locastic_sylius_comparer_plugin.model.comparer_product.class%"

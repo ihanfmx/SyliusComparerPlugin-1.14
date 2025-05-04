@@ -1,70 +1,47 @@
 imports:
-    - { resource: services/controllers.yml }
     - { resource: services/factories.yml }
+    - { resource: services/repositories.yml }
+    - { resource: services/controllers.yml }
     - { resource: services/validators.yml }
 
 services:
 
+    # Contexto principal del comparador
     locastic_sylius_comparer_plugin.context.comparer_context:
         class: Locastic\SyliusComparerPlugin\Context\ComparerContext
         arguments:
-            - "@security.token_storage"
-            - "@locastic_sylius_comparer_plugin.custom_factory.comparer"
-            - "@locastic_sylius_comparer_plugin.repository.comparer"
-            - "%comparer_cookie_token%"
+            - '@security.token_storage'
+            - '@locastic_sylius_comparer_plugin.custom_factory.comparer'
+            - '@locastic_sylius_comparer_plugin.repository.comparer'
+            - '%comparer_cookie_token%'
 
+    # Validador de capacidad (límite de ítems permitidos)
     locastic_sylius_comparer_plugin.utils.comparer_capacity_checker:
         class: Locastic\SyliusComparerPlugin\Utils\ComparerCapacityChecker
         arguments:
-            - "%comparer_item_limit%"
+            - '%comparer_item_limit%'
 
-    locastic.sylius_comparer_plugin.utils.comparer_token:
+    # Generador de tokens para comparador
+    locastic_sylius_comparer_plugin.utils.comparer_token:
         class: Locastic\SyliusComparerPlugin\Utils\ComparerToken
         arguments:
-            - "@sylius.random_generator"
+            - '@sylius.random_generator'
 
+    # Listener para inyectar estilos en la cabecera
     locastic_sylius_comparer_plugin.block.inject_style:
         class: Sylius\Bundle\UiBundle\Block\BlockEventListener
         arguments:
-            - "LocasticSyliusComparerPlugin::_stylesheets.html.twig"
+            - 'LocasticSyliusComparerPlugin::_stylesheets.html.twig'
         tags:
-            -
-                name: kernel.event_listener
-                event: sonata.block.event.sylius.shop.layout.header
-                method: onBlockEvent
+            - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.layout.header, method: onBlockEvent }
+    
 
-    locastic.sylius_comparer_plugin.utils.message_redirect_helper:
+    locastic_sylius_comparer_plugin.utils.message_redirect_helper:
         class: Locastic\SyliusComparerPlugin\Utils\MessageRedirectHelper
         arguments:
-            - "@session.flash_bag"
-            - "@router.default"
-            - "@sylius.theme.translation.translator"
-
-    locastic_sylius_comparer_plugin.factory.comparer:
-        class: Sylius\Component\Resource\Factory\Factory
-        arguments:
-            - '%locastic_sylius_comparer_plugin.model.comparer.class%'
-
-    locastic_sylius_comparer_plugin.factory.comparer_product:
-        class: Sylius\Component\Resource\Factory\Factory
-        arguments:
-            - '%locastic_sylius_comparer_plugin.model.comparer_product.class%'
-
-    locastic_sylius_comparer_plugin.custom_factory.comparer:
-        class: Locastic\SyliusComparerPlugin\Factory\ComparerFactory
-        decorates: locastic_sylius_comparer_plugin.factory.comparer
-        arguments:
-            - '@locastic_sylius_comparer_plugin.factory.comparer.inner'
-            - '@sylius.factory.customer'
-            - '@sylius.factory.product'
-    
-    locastic_sylius_comparer_plugin.custom_factory.comparer_product:
-        class: Locastic\SyliusComparerPlugin\Factory\ComparerProductFactory
-        decorates: locastic_sylius_comparer_plugin.factory.comparer_product
-        arguments:
-            - '@locastic_sylius_comparer_plugin.factory.comparer_product.inner'
-            - '@locastic_sylius_comparer_plugin.repository.comparer'
-            - '@sylius.repository.product'
+            $flashBag: '@=service("request_stack").getSession().getFlashBag()'
+            $urlGenerator:   '@router.default'
+            $translator: '@translator.default'
 
 parameters:
     comparer_item_limit: 4

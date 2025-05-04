@@ -1,29 +1,55 @@
 services:
+    # =============================================
+    # 1. FÁBRICAS BASE (originales)
+    # =============================================
+    locastic_sylius_comparer_plugin.factory.comparer:
+        class: Sylius\Component\Resource\Factory\Factory
+        public: true   # Temporalmente público para debugging
+        arguments:
+            - '%locastic_sylius_comparer_plugin.model.comparer.class%'
 
+    locastic_sylius_comparer_plugin.factory.comparer_product:
+        class: Sylius\Component\Resource\Factory\Factory
+        public: true
+        arguments:
+            - '%locastic_sylius_comparer_plugin.model.comparer_product.class%'
+
+    # =============================================
+    # 2. FÁBRICAS PERSONALIZADAS (decoradores)
+    # =============================================
     locastic_sylius_comparer_plugin.custom_factory.comparer:
         class: Locastic\SyliusComparerPlugin\Factory\ComparerFactory
         decorates: locastic_sylius_comparer_plugin.factory.comparer
-        public: true
+        decoration_inner_name: locastic_sylius_comparer_plugin.factory.comparer.inner
         arguments:
-            - "@locastic_sylius_comparer_plugin.custom_factory.comparer.inner"
-            - "@locastic.sylius_comparer_plugin.utils.comparer_token"
+            - '@locastic_sylius_comparer_plugin.factory.comparer.inner'
+            - '@locastic_sylius_comparer_plugin.utils.comparer_token'
+            - '@sylius.factory.customer'
+            - '@sylius.factory.product'
 
     locastic_sylius_comparer_plugin.custom_factory.comparer_product:
         class: Locastic\SyliusComparerPlugin\Factory\ComparerProductFactory
         decorates: locastic_sylius_comparer_plugin.factory.comparer_product
-        public: true
+        decoration_inner_name: locastic_sylius_comparer_plugin.factory.comparer_product.inner
         arguments:
-            - "@locastic_sylius_comparer_plugin.custom_factory.comparer_product.inner"
+            - '@locastic_sylius_comparer_plugin.factory.comparer_product.inner'
+            - '@locastic_sylius_comparer_plugin.repository.comparer'
+            - '@sylius.repository.product'
 
-    locastic.sylius_comparer_plugin.factory.comparer_cookie_factory:
+    # =============================================
+    # 3. FÁBRICAS AUXILIARES
+    # =============================================
+    locastic_sylius_comparer_plugin.factory.comparer_cookie_factory:
         class: Locastic\SyliusComparerPlugin\Factory\ComparerCookieFactory
         arguments:
-            - "%comparer_cookie_token%"
+            - '%comparer_cookie_token%'
 
-    locastic.sylius_comparer_plugin.factory.add_product_to_comparer_request_factory:
+    locastic_sylius_comparer_plugin.factory.add_product_to_comparer_request:
         class: Locastic\SyliusComparerPlugin\Factory\AddProductToComparerRequestFactory
-        arguments: ['@locastic_sylius_comparer_plugin.context.comparer_context']
+        arguments:
+            - '@locastic_sylius_comparer_plugin.context.comparer_context'
 
-    locastic.sylius_comparer_plugin.factory.remove_product_from_comparer_request_factory:
+    locastic_sylius_comparer_plugin.factory.remove_product_from_comparer_request:
         class: Locastic\SyliusComparerPlugin\Factory\RemoveProductFromComparerRequestFactory
-        arguments: ['@locastic_sylius_comparer_plugin.context.comparer_context']
+        arguments:
+            - '@locastic_sylius_comparer_plugin.context.comparer_context'
